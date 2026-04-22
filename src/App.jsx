@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import systemPromptMd from './prompts/system-prompt.md?raw'
+import suggestedPromptsMd from './prompts/suggested-prompts.md?raw'
 
 /* ─── SVG Icons ─── */
 const SunIcon = () => (<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="4" stroke="#C9A84C" strokeWidth="2"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.93 4.93l1.41 1.41M13.66 13.66l1.41 1.41M4.93 15.07l1.41-1.41M13.66 6.34l1.41-1.41" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round"/></svg>)
@@ -63,9 +65,13 @@ function StatCard({ value, label, color }) {
 }
 
 /* ─── Ask AI Panel ─── */
-const SYSTEM_PROMPT = `You are the AgenticBricks AI assistant embedded in their capabilities deck. You help viewers understand AgenticBricks' work, products, and how they might work together. You know AgenticBricks deeply: they build production software for pharma, manufacturing, financial services, healthcare research, education, and media. Their pharma products are AgenticCLM (contract lifecycle management, live URL: agentic-clm-772467090794.us-west1.run.app) and PharmaRevOps (revenue management replacing Model N, live URL: pharmarevops-ui-1063256373100.us-central1.run.app). They delivered a cGMP pharma manufacturer from empty repository to production in 89 days. Three engagement models: Build together, Platform your AI team, License a product. Founders: Rajesh Brundala (pharma revenue management + CLM) and Pavan Kanaparthy (engineering delivery). Contact: agenticbricks.com. Keep answers concise (3-5 sentences max). Be direct, specific, no marketing fluff. If someone asks about pricing or timelines, say those are discussed in a working session and offer to help them get in touch via agenticbricks.com/contact. Never fabricate case study details beyond what you know.`
+const SYSTEM_PROMPT = systemPromptMd
 
-const SUGGESTED = ['What is PharmaRevOps?', 'How quickly can you deliver?', 'What would working together look like?']
+// Parse suggested prompts from markdown: lines starting with "- "
+const SUGGESTED = suggestedPromptsMd
+  .split('\n')
+  .filter(line => line.startsWith('- '))
+  .map(line => line.slice(2).trim())
 
 function AskAI() {
   const [open, setOpen] = useState(false)
@@ -132,7 +138,7 @@ function AskAI() {
           <span className="absolute inline-flex h-full w-full rounded-full" style={{ backgroundColor: '#14B8A6', animation: 'pulse-ring 2s ease-out infinite' }} />
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3z" /></svg>
         </span>
-        <span className="text-sm font-medium">Ask AI</span>
+        <span className="text-sm font-medium">Questions?</span>
       </button>
 
       {open && (
@@ -150,7 +156,7 @@ function AskAI() {
           <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
             {messages.length === 0 && (
               <div className="space-y-3">
-                <p className="text-sm text-text-muted">Ask anything about AgenticBricks, our products, or how we might work together.</p>
+                <p className="text-sm text-text-muted">We built this to answer any questions you might have about AgenticBricks, our products, or how our teams might work together.</p>
                 <div className="flex flex-wrap gap-2">
                   {SUGGESTED.map(s => (
                     <button key={s} onClick={() => sendMessage(s)} className="text-xs px-3 py-1.5 rounded-full cursor-pointer text-teal-lt" style={{ backgroundColor: 'rgba(20,184,166,0.1)', border: '1px solid rgba(13,148,136,0.3)' }}>{s}</button>
@@ -410,12 +416,12 @@ export default function App() {
         <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-heading mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>PharmaRevOps</h2>
         <div className="glow-line max-w-xs mb-4" />
         <p className="text-teal text-base sm:text-xl max-w-4xl mb-6 leading-relaxed italic" style={{ fontFamily: "'Playfair Display', serif" }}>
-          &ldquo;Revenue management platform built for pharma. Designed to replace Model N.&rdquo;
+          &ldquo;Revenue management platform built for pharma. Purpose-built for emerging and mid-size manufacturers.&rdquo;
         </p>
 
         <div className="card p-5 sm:p-8 rounded-2xl mb-8 sm:mb-12" style={{ background: 'rgba(201,168,76,0.05)', border: '1px solid rgba(201,168,76,0.15)' }}>
           <p className="text-text-muted text-base sm:text-lg leading-relaxed">
-            Model N implementations routinely run 18 months and eight figures. The calculations are not the hard part: gross-to-net waterfall, chargeback validation, AMP, Best Price, Medicaid URAs. <span className="text-gold font-semibold">The hard part is there was no modern platform built specifically for them. PharmaRevOps is.</span>
+            Emerging and mid-size pharma manufacturers face the same compliance requirements as the Top 10 — gross-to-net waterfall, chargeback validation, AMP, Best Price, Medicaid URAs — but without the budget or timeline for enterprise-scale implementations. <span className="text-gold font-semibold">PharmaRevOps is a modern platform built specifically for them.</span>
           </p>
         </div>
 
