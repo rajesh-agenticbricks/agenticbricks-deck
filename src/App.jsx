@@ -103,16 +103,29 @@ function AskAI() {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-        body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 512, system: SYSTEM_PROMPT, stream: true, messages: newMessages.map(m => ({ role: m.role, content: m.content })) }),
+        body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1024, system: SYSTEM_PROMPT, stream: true, messages: newMessages.map(m => ({ role: m.role, content: m.content })) }),
       })
+
+      if (!response.ok) {
+        const errBody = await response.text()
+        console.error('API error:', response.status, errBody)
+        setMessages(prev => [...prev, { role: 'assistant', content: `API error (${response.status}). Please check the API key configuration.` }])
+        setStreaming(false)
+        return
+      }
+
       const reader = response.body.getReader()
       const decoder = new TextDecoder()
       let assistantText = ''
+      let buffer = ''
       setMessages(prev => [...prev, { role: 'assistant', content: '' }])
       while (true) {
         const { done, value } = await reader.read()
         if (done) break
-        for (const line of decoder.decode(value).split('\n')) {
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split('\n')
+        buffer = lines.pop() || ''
+        for (const line of lines) {
           if (!line.startsWith('data: ')) continue
           const data = line.slice(6)
           if (data === '[DONE]') break
@@ -125,7 +138,11 @@ function AskAI() {
           } catch {}
         }
       }
-    } catch {
+      if (!assistantText) {
+        setMessages(prev => { const u = [...prev]; u[u.length - 1] = { role: 'assistant', content: 'No response received. Please try again.' }; return u })
+      }
+    } catch (err) {
+      console.error('Chat error:', err)
       setMessages(prev => [...prev, { role: 'assistant', content: 'Something went wrong. Please try again.' }])
     }
     setStreaming(false)
