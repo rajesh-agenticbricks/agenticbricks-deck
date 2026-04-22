@@ -163,6 +163,13 @@ body {
   background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
 }
 
+/* On mobile, don't shift content when chat opens */
+@media (max-width: 640px) {
+  .hidden-margin-mobile {
+    margin-right: 0 !important;
+  }
+}
+
 /* Print styles */
 @media print {
   .sticky-nav, .theme-toggle, .ask-ai-btn { display: none !important; }

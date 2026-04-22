@@ -89,8 +89,7 @@ const SUGGESTED = suggestedPromptsMd
   .filter(line => line.startsWith('- '))
   .map(line => line.slice(2).trim())
 
-function AskAI() {
-  const [open, setOpen] = useState(false)
+function AskAI({ open, setOpen }) {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [streaming, setStreaming] = useState(false)
@@ -241,10 +240,12 @@ const NAV = [
 /* ═══════════════════════════════════════════ */
 export default function App() {
   const [theme, setTheme] = useState('dark')
+  const [chatOpen, setChatOpen] = useState(false)
   const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
 
   return (
     <div className="min-h-screen bg-bg" data-theme={theme}>
+      <div className="transition-all duration-300 hidden-margin-mobile" style={{ marginRight: chatOpen ? '520px' : '0' }}>
       <button onClick={toggleTheme} className="theme-toggle" aria-label="Toggle theme">
         {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
       </button>
@@ -720,8 +721,9 @@ export default function App() {
       <footer className="py-8 text-center text-text-dim text-sm">
         &copy; 2026 AgenticBricks. All rights reserved.
       </footer>
+      </div>
 
-      <AskAI />
+      <AskAI open={chatOpen} setOpen={setChatOpen} />
     </div>
   )
 }
