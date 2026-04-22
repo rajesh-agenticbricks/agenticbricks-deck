@@ -175,7 +175,7 @@ function AskAI() {
       </button>
 
       {open && (
-        <div className="fixed top-0 right-0 z-50 h-full w-full sm:w-[400px] flex flex-col shadow-2xl" style={{ backgroundColor: 'var(--color-bg-card)', borderLeft: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className="fixed top-0 right-0 z-50 h-full w-full sm:w-[520px] flex flex-col shadow-2xl" style={{ backgroundColor: 'var(--color-bg-card)', borderLeft: '1px solid rgba(255,255,255,0.08)' }}>
           <div className="flex items-center justify-between px-5 py-4 border-b border-white/8">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#14B8A6' }} />
