@@ -64,6 +64,22 @@ function StatCard({ value, label, color }) {
   )
 }
 
+/* ─── Simple Markdown Renderer ─── */
+function renderMarkdown(text) {
+  if (!text) return null
+  return text.split('\n').map((line, i) => {
+    // Bold
+    const parts = line.split(/(\*\*[^*]+\*\*)/).map((seg, j) => {
+      if (seg.startsWith('**') && seg.endsWith('**')) {
+        return <strong key={j} className="text-heading font-semibold">{seg.slice(2, -2)}</strong>
+      }
+      return seg
+    })
+    if (!line.trim()) return <br key={i} />
+    return <div key={i} className={i > 0 ? 'mt-1.5' : ''}>{parts}</div>
+  })
+}
+
 /* ─── Ask AI Panel ─── */
 const SYSTEM_PROMPT = systemPromptMd
 
@@ -183,7 +199,7 @@ function AskAI() {
             )}
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className="max-w-[85%] px-3.5 py-2.5 rounded-xl text-sm leading-relaxed" style={{ backgroundColor: m.role === 'user' ? '#0D9488' : 'var(--color-bg)', color: m.role === 'user' ? '#fff' : 'var(--color-text)' }}>{m.content}</div>
+                <div className="max-w-[85%] px-3.5 py-2.5 rounded-xl text-sm leading-relaxed" style={{ backgroundColor: m.role === 'user' ? '#0D9488' : 'var(--color-bg)', color: m.role === 'user' ? '#fff' : 'var(--color-text)' }}>{m.role === 'assistant' ? renderMarkdown(m.content) : m.content}</div>
               </div>
             ))}
             {streaming && messages[messages.length - 1]?.role !== 'assistant' && (
