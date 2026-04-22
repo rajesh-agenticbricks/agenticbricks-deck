@@ -271,9 +271,6 @@ export default function App() {
             </div>
             <p className="text-text-muted text-sm sm:text-base mb-4">Healthcare · Pharma · Manufacturing · Supply Chain</p>
             <div className="glow-line max-w-xs mx-auto mb-6" />
-            <blockquote className="text-base sm:text-xl md:text-2xl text-text-muted italic max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: "'Playfair Display', serif" }}>
-              &ldquo;Three enterprise systems in production. Two live today. One in UAT. Each built in under three months.&rdquo;
-            </blockquote>
             <div className="flex justify-between text-text-dim text-sm mt-8 sm:mt-12 max-w-md mx-auto">
               <a href="https://agenticbricks.com" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">agenticbricks.com</a>
               <span>April 2026</span>
