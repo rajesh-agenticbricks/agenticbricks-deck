@@ -263,13 +263,13 @@ export default function App() {
       <Section id="who">
         <SectionLabel color="teal">Who We Are</SectionLabel>
         <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-heading mb-5" style={{ fontFamily: "'Playfair Display', serif" }}>
-          We build where others consult.
+          We ship production software.
         </h2>
         <p className="text-text-muted text-base sm:text-xl max-w-4xl mb-4 leading-relaxed">
-          Most engagements in this space start with three to six months of discovery. The vendor is learning what GxP means, how batch records flow, what a deviation looks like. <span className="text-gold font-semibold">You fund the education.</span>
+          Most engagements in this space start with three to six months of discovery. The vendor is learning your domain, your workflows, your compliance requirements. <span className="text-gold font-semibold">You fund the education.</span>
         </p>
         <p className="text-text-muted text-base sm:text-xl max-w-4xl mb-4 leading-relaxed">
-          We&apos;ve worked inside pharmaceutical and healthcare organizations. When a client describes a deviation workflow or a chargeback dispute, we already know what they mean. <span className="text-teal font-semibold">Architecture decisions happen in week one, not month four.</span>
+          We&apos;ve worked inside regulated and complex organizations across pharma, healthcare, financial services, and manufacturing. When a client describes an industry-specific workflow or a compliance gap, we already know the context. <span className="text-teal font-semibold">Architecture decisions happen in week one, not month four.</span>
         </p>
         <p className="text-text-muted text-base sm:text-xl max-w-4xl mb-4 leading-relaxed">
           We use Anthropic&apos;s Claude Code throughout the build: test generation, cross-file refactoring, documentation. The pace is faster than anything a traditional team delivers. The quality bar is identical.
@@ -280,7 +280,7 @@ export default function App() {
 
         <div className="grid md:grid-cols-3 gap-3 sm:gap-6">
           {[
-            { title: 'Domain-first', color: '#0D9488', text: 'Our first commit includes audit trail middleware and Part 11 controls. Most vendors learn what those words mean in month three of your engagement.' },
+            { title: 'Domain-first', color: '#0D9488', text: 'Our first commit includes the compliance controls and audit infrastructure your industry requires. Most vendors are still learning the terminology in month three.' },
             { title: 'Build before pitch', color: '#C9A84C', text: "Every pitch includes something that runs. If we can't show you a working system, we don't pitch." },
             { title: 'Production, not pilots', color: '#14B8A6', text: 'Specialty pharma manufacturer: empty repository to cGMP production in 89 days. That is not typical.' },
           ].map(card => (
